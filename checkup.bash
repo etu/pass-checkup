@@ -17,6 +17,7 @@
 # []
 
 VERSION="0.1.1"
+RETURNCODE=0
 
 # Function to call that determines if we're looking for a file or a directory
 # and then calls the right function to check all files in that directory or
@@ -31,12 +32,14 @@ cmd_checkup_check() {
     # If we're getting a directory, send it to a separate function
     if test -d "$passdir"; then
         cmd_checkup_check_dir "$path"
-        exit 0
+
+        exit $RETURNCODE
     fi
 
     if test -f "$passfile"; then
         cmd_checkup_check_file "$path"
-        exit 0
+
+        exit $RETURNCODE
     fi
 
     echo "${path}: pass file or directory not found."
@@ -51,8 +54,8 @@ cmd_checkup_check_dir() {
 
     check_sneaky_paths "$path"
 
-    find "$passdir" -type f -name '*.gpg' | sort | sed -e "s#${PREFIX}/##" -e "s#.gpg##" | while read fname; do
-        cmd_checkup_check_file "$fname"
+    for passname in $(find "$passdir" -type f -name '*.gpg' | sort | sed -e "s#${PREFIX}/##" -e "s#.gpg##"); do
+        cmd_checkup_check_file "$passname"
     done
 }
 
@@ -86,6 +89,7 @@ cmd_checkup_check_file() {
     if test $(echo -n $leakedHashes | wc -c) = 0; then
         echo -e "${GREEN}${path}: Password is probably not leaked ✔️${NC}"
     else
+        RETURNCODE=2
         echo -e "${RED}${path}: Password is leaked ❌${NC}" 1>&2
     fi
 }
@@ -110,7 +114,12 @@ Usage:
         So to get only leaked ones you can run:
         $PROGRAM checkup [pass-name] > /dev/null
 
-    $PROGRAM checkup [help|--help|-h]
+        Return codes for the extension is:
+         - 0 if all passwords are fine or it's a helper / version subcommand
+         - 1 if a specified pass-name doesn't exist
+         - 2 if any of the pass-names checked is considered leaked
+
+     $PROGRAM checkup [help|--help|-h]
         Print this help page.
 
     $PROGRAM checkup [version|--version|-v]
@@ -127,4 +136,4 @@ case "$1" in
     *)                           cmd_checkup_check "$@" ;;
 esac
 
-exit 0
+exit $RETURNCODE

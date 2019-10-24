@@ -26,6 +26,11 @@ passwords are publicly leaked or not.
         So to get only leaked ones you can run:
         pass checkup [pass-name] > /dev/null
 
+        Return codes for the extension is:
+         - 0 if all passwords are fine or it's a helper / version subcommand
+         - 1 if a specified pass-name doesn't exist
+         - 2 if any of the pass-names checked is considered leaked
+
     pass checkup [help|--help|-h]
         Print this help page.
 
