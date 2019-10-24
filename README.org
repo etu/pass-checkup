@@ -1,0 +1,17 @@
+* pass-checkup
+A [[https://www.passwordstore.org/][pass]] extension to check against the [[https://haveibeenpwned.com/API/v3][Have I been pwned API]] to see if your
+passwords are publicly leaked or not.
+
+** Usage
+#+BEGIN_SRC
+    pass checkup [pass-name]
+        Check if a password is publicly leaked through HaveIbeenPwned's api.
+
+        If no [pass-name] is supplied, we'll check all passwords.
+
+    pass checkup [help|--help|-h]
+        Print this help page.
+
+    pass checkup --version
+        Print version of this extension.
+#+END_SRC
