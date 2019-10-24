@@ -86,7 +86,7 @@ cmd_checkup_check_file() {
     if test $(echo -n $leakedHashes | wc -c) = 0; then
         echo -e "${GREEN}${path}: Password is probably not leaked ✔️${NC}"
     else
-        echo -e "${RED}${path}: Password is leaked ❌${NC}"
+        echo -e "${RED}${path}: Password is leaked ❌${NC}" 1>&2
     fi
 }
 
@@ -103,6 +103,12 @@ Usage:
         Check if a password is publicly leaked through HaveIbeenPwned's api.
 
         If no [pass-name] is supplied, we'll check all passwords.
+
+        Lines of passwords that are leaked are outputed to STDERR while
+        probably non-leaked passwords are outputted to STDOUT.
+
+        So to get only leaked ones you can run:
+        $PROGRAM checkup [pass-name] > /dev/null
 
     $PROGRAM checkup [help|--help|-h]
         Print this help page.

@@ -20,6 +20,12 @@ passwords are publicly leaked or not.
 
         If no [pass-name] is supplied, we'll check all passwords.
 
+        Lines of passwords that are leaked are outputed to STDERR while
+        probably non-leaked passwords are outputted to STDOUT.
+
+        So to get only leaked ones you can run:
+        pass checkup [pass-name] > /dev/null
+
     pass checkup [help|--help|-h]
         Print this help page.
 
