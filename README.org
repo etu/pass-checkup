@@ -2,6 +2,17 @@
 A [[https://www.passwordstore.org/][pass]] extension to check against the [[https://haveibeenpwned.com/API/v3][Have I been pwned API]] to see if your
 passwords are publicly leaked or not.
 
+** Dependencies
+ - curl
+ - find
+ - grep
+ - sed
+ - coreutils
+   - head
+   - sha1sum
+   - sort
+   - tr
+
 ** Usage
 #+BEGIN_SRC
     pass checkup [pass-name]

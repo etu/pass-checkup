@@ -16,16 +16,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # []
 
-VERSION="0.1.0"
-
-CURL=$(command -v curl)
-FIND=$(command -v find)
-GREP=$(command -v grep)
-HEAD=$(command -v head)
-SED=$(command -v sed)
-SHA1SUM=$(command -v sha1sum)
-SORT=$(command -v sort)
-TR=$(command -v tr)
+VERSION="0.1.1"
 
 # Function to call that determines if we're looking for a file or a directory
 # and then calls the right function to check all files in that directory or
@@ -60,7 +51,7 @@ cmd_checkup_check_dir() {
 
     check_sneaky_paths "$path"
 
-    $FIND "$passdir" -type f -name '*.gpg' | $SORT | $SED -e "s#${PREFIX}/##" -e "s#.gpg##" | while read fname; do
+    find "$passdir" -type f -name '*.gpg' | sort | sed -e "s#${PREFIX}/##" -e "s#.gpg##" | while read fname; do
         cmd_checkup_check_file "$fname"
     done
 }
@@ -75,7 +66,7 @@ cmd_checkup_check_file() {
 
     # Get password hash
     # Decrypt the file, get first line, trim away newlines, hash it
-    hash=$($GPG -d "${GPG_OPTS[@]}" "$passfile" | $HEAD -n 1 | $TR -d '\n' | $SHA1SUM)
+    hash=$($GPG -d "${GPG_OPTS[@]}" "$passfile" | head -n 1 | tr -d '\n' | sha1sum)
 
     # Get the 5 first characters of the hash
     startOfHash=${hash::5}
@@ -84,7 +75,7 @@ cmd_checkup_check_file() {
     endOfHash=${hash:5:35}
 
     # Get filtered leaked hashes
-    leakedHashes=$($CURL -H 'user-agent: pass-checkup-extension; github.com/etu/pass-checkup' -s "https://api.pwnedpasswords.com/range/${startOfHash}" | $GREP -i $endOfHash)
+    leakedHashes=$(curl -H 'user-agent: pass-checkup-extension; github.com/etu/pass-checkup' -s "https://api.pwnedpasswords.com/range/${startOfHash}" | grep -i $endOfHash)
 
     # Define some color codes
     RED='\033[0;31m'
@@ -116,7 +107,7 @@ Usage:
     $PROGRAM checkup [help|--help|-h]
         Print this help page.
 
-    $PROGRAM checkup --version
+    $PROGRAM checkup [version|--version|-v]
         Print version of this extension.
 
 EOF
