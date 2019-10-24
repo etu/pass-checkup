@@ -16,7 +16,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # []
 
-VERSION="0.1.1"
+VERSION="0.2.0"
 RETURNCODE=0
 
 # Function to call that determines if we're looking for a file or a directory
