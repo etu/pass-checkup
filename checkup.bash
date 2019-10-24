@@ -38,13 +38,13 @@ cmd_checkup_check() {
     check_sneaky_paths "$path"
 
     # If we're getting a directory, send it to a separate function
-    if test -d $passdir; then
-        cmd_checkup_check_dir $path
+    if test -d "$passdir"; then
+        cmd_checkup_check_dir "$path"
         exit 0
     fi
 
-    if test -f $passfile; then
-        cmd_checkup_check_file $path
+    if test -f "$passfile"; then
+        cmd_checkup_check_file "$path"
         exit 0
     fi
 
@@ -60,8 +60,8 @@ cmd_checkup_check_dir() {
 
     check_sneaky_paths "$path"
 
-    $FIND $passdir -type f -name '*.gpg' | $SORT | $SED -e "s#${PREFIX}/##" -e "s#.gpg##" | while read fname; do
-        cmd_checkup_check_file $fname
+    $FIND "$passdir" -type f -name '*.gpg' | $SORT | $SED -e "s#${PREFIX}/##" -e "s#.gpg##" | while read fname; do
+        cmd_checkup_check_file "$fname"
     done
 }
 
@@ -71,7 +71,7 @@ cmd_checkup_check_file() {
     local passfile="$PREFIX/$path.gpg"
 
     check_sneaky_paths "$path"
-    [[ ! -f $passfile ]] && die "$path: passfile not found."
+    [[ ! -f "$passfile" ]] && die "$path: passfile not found."
 
     # Get password hash
     # Decrypt the file, get first line, trim away newlines, hash it
