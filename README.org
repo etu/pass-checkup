@@ -15,3 +15,6 @@ passwords are publicly leaked or not.
     pass checkup --version
         Print version of this extension.
 #+END_SRC
+
+** Screenshot
+[[https://raw.githubusercontent.com/etu/pass-checkup/master/screenshot.png]]
