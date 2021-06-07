@@ -85,7 +85,7 @@ cmd_checkup_check_file() {
     endOfHash=${hash:5:35}
 
     # Get filtered leaked hashes
-    leakedHashes=$(curl -H 'user-agent: pass-checkup-extension; github.com/etu/pass-checkup' -s "https://api.pwnedpasswords.com/range/${startOfHash}" | grep -i $endOfHash)
+    leakedHashes=$(curl -H 'user-agent: pass-checkup-extension; github.com/etu/pass-checkup' -s "https://api.pwnedpasswords.com/range/${startOfHash}" | grep -i "$endOfHash")
 
     # Define some color codes
     RED='\033[0;31m'
@@ -93,7 +93,7 @@ cmd_checkup_check_file() {
     NC='\033[0m' # No Color
 
     # Check if password is leaked or not
-    if test $(echo -n $leakedHashes | wc -c) = 0; then
+    if test "$(echo -n "$leakedHashes" | wc -c)" = 0; then
         echo -e "${GREEN}${path}: Password is probably not leaked ✔️${NC}"
     else
         RETURNCODE=2
