@@ -54,9 +54,16 @@ cmd_checkup_check_dir() {
 
     check_sneaky_paths "$path"
 
+    # Set variable to manage filenames with spaces
+    SAVEIFS=$IFS
+    IFS=$(echo -en "\n\b")
+
     for passname in $(find "$passdir" -type f -name '*.gpg' | sort | sed -e "s#${PREFIX}/##" -e "s#.gpg##"); do
         cmd_checkup_check_file "$passname"
     done
+
+    # Restore variable
+    IFS=$SAVEIFS
 }
 
 # Function that checks if a password is leaked or not.
