@@ -16,7 +16,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # []
 
-VERSION="0.2.1"
+VERSION="0.2.2"
 RETURNCODE=0
 
 # Function to call that determines if we're looking for a file or a directory
@@ -142,5 +142,3 @@ case "$1" in
     check)                shift; cmd_checkup_check "$@" ;;
     *)                           cmd_checkup_check "$@" ;;
 esac
-
-exit $RETURNCODE
