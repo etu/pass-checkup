@@ -1,7 +1,7 @@
 ---
 name: Codestyle checks
 
-'on':
+on:
   pull_request:
     branches:
       - main
@@ -9,7 +9,6 @@ name: Codestyle checks
   push:
     branches:
       - main
-      - nodejs-frontend  # TODO: Remove me when web-frontend is merged
 
 jobs:
   shellcheck:
