@@ -15,7 +15,7 @@ jobs:
     name: Run shellcheck style checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4
 
       - uses: cachix/install-nix-action@v26
         with:
@@ -30,7 +30,7 @@ jobs:
     name: Run yamllint on github actions files
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4
 
       - uses: cachix/install-nix-action@v26
         with:
