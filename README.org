@@ -1,5 +1,7 @@
 [[https://repology.org/project/pass-checkup/versions][https://repology.org/badge/vertical-allrepos/pass-checkup.svg]]
 
+* Project is unmaintained
+
 * pass-checkup
 A [[https://www.passwordstore.org/][pass]] extension to check against the [[https://haveibeenpwned.com/API/v3][Have I been pwned API]] to see if your
 passwords are publicly leaked or not.
